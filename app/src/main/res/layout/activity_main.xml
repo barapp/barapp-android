@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.develmagic.quellio.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CollapsingToolbarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,53 +16,88 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.develmagic.quellio.controls.IconLabelTabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="112dp"
-        app:tabIndicatorColor="@color/selected_tab"
-        app:tabIndicatorHeight="6dp"
-        app:tabMaxWidth="0dp"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabTextAppearance="?android:attr/textAppearanceLarge"/>
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="112dp"
+            app:tabIndicatorColor="@color/selected_tab"
+            app:tabIndicatorHeight="6dp"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextAppearance="?android:attr/textAppearanceLarge"/>
 
-        <!--<android.support.design.widget.TabLayout-->
-            <!--android:id="@+id/tabs"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="107dp"-->
-            <!--app:tabIndicatorHeight="6dp"-->
-            <!--app:tabIndicatorColor="@color/selected_tab"-->
-            <!--app:tabMaxWidth="0dp"-->
-            <!--app:tabGravity="fill"-->
-            <!--app:tabMode="fixed"-->
-            <!--app:tabTextColor="#000"-->
-            <!--style="@style/AppTabLayout"-->
-            <!--/>-->
-
-        <!---->
-
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </android.support.design.widget.CollapsingToolbarLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimary"
-        android:layout_height="161dp">
+        android:padding="20dp"
+        android:layout_height="match_parent">
 
-        <com.develmagic.quellio.controls.OrderSummary
-            android:id="@+id/ordersummary"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"></com.develmagic.quellio.controls.OrderSummary>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:background="#42342b"
+        android:padding="20dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal">
+
+            <TextView
+                android:text="Order summary: "
+                android:layout_width="wrap_content"
+                android:id="@+id/summarytitle"
+                android:textSize="20dp"
+                android:textColor="#ffffff"
+                android:layout_height="30dp" />
+
+
+            <TextView
+                android:text="2.30 EUR"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textColor="#44d8a6"
+                android:textSize="20dp"
+                android:id="@+id/summaryprice"
+                android:textStyle="bold" />
+
+            <TextView
+                android:text=" (4)"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                android:id="@+id/summarycount"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:text="Finish order"
+            android:padding="10dp"
+            android:width="300dp"
+            android:height="60dp"
+            android:textAllCaps="false"
+            android:textSize="30dp"
+            android:layout_gravity="center_horizontal"
+            android:includeFontPadding="true"
+            android:textColor="#ffffff"
+            android:background="@drawable/finish_order_button"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

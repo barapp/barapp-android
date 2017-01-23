@@ -251,6 +251,7 @@ import com.develmagic.quellio.controls.IconLabelTabLayout;
 import java.util.ArrayList;
 import java.util.List;
 import com.develmagic.quellio.R;
+import com.develmagic.quellio.fragments.ProductList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -262,22 +263,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager = (ViewPager) findViewById(R.id.container);
-        createViewPager(viewPager);
-
         tabLayout = (IconLabelTabLayout) findViewById(R.id.tabs);
+
+        viewPager = (ViewPager) findViewById(R.id.container);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.addFrag(new ProductList(), "Coffee");
+        viewPagerAdapter.addFrag(new ProductList(), "Beer");
+        viewPagerAdapter.addFrag(new ProductList(), "Soft drinks");
+        viewPagerAdapter.addFrag(new ProductList(), "Pastry");
+        viewPager.setAdapter(viewPagerAdapter);
+
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.addTab(getApplicationContext(), R.drawable.ic_coffee, "Coffee");
-        tabLayout.addTab(getApplicationContext(), R.drawable.ic_beer, "Beer");
-        tabLayout.addTab(getApplicationContext(), R.drawable.ic_softdrinks, "softdrinks");
-        tabLayout.addTab(getApplicationContext(), R.drawable.ic_pastry, "Pastry");
+        tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_coffee, 0);
+        tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_beer, 1);
+        tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_softdrinks, 2);
+        tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_pastry, 3);
 
-    }
-
-    private void createViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

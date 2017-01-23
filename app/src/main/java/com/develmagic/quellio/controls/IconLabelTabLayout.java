@@ -23,8 +23,9 @@ public class IconLabelTabLayout extends TabLayout {
     private static final String DIVIDER_COLOR = "#42362e";
     private String dividerColor;
 
-    public Tab addTab(Context context, @DrawableRes int icon, String title) {
+    public Tab decorateTab(Context context, @DrawableRes int icon, int tabIndex) {
 
+        Tab tab = getTabAt(tabIndex);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(),"Roboto-Light.ttf");
 
         View view = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null);
@@ -32,11 +33,9 @@ public class IconLabelTabLayout extends TabLayout {
 
         TextView textView = (TextView) view.findViewById(R.id.labeltext);
         textView.setTypeface(typeface);
-        textView.setText(title);
+        textView.setText(tab.getText());
 
-        Tab tab = this.newTab();
         tab.setCustomView(view);
-        this.addTab(tab);
 
         if (this.getTabCount() == 1) {
             this.getTabAt(0).getCustomView().findViewById(R.id.icon).setAlpha(1f);
@@ -68,14 +67,18 @@ public class IconLabelTabLayout extends TabLayout {
         this.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.icon).setAlpha(1f);
-                tab.getCustomView().findViewById(R.id.labeltext).setAlpha(1f);
+                if (tab.getCustomView() != null) {
+                    tab.getCustomView().findViewById(R.id.icon).setAlpha(1f);
+                    tab.getCustomView().findViewById(R.id.labeltext).setAlpha(1f);
+                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                tab.getCustomView().findViewById(R.id.icon).setAlpha(0.5f);
-                tab.getCustomView().findViewById(R.id.labeltext).setAlpha(0.5f);
+                if (tab.getCustomView() != null) {
+                    tab.getCustomView().findViewById(R.id.icon).setAlpha(0.5f);
+                    tab.getCustomView().findViewById(R.id.labeltext).setAlpha(0.5f);
+                }
             }
 
             @Override
