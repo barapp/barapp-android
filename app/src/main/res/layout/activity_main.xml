@@ -88,7 +88,7 @@
                 android:id="@+id/basket_products"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                class="com.develmagic.quellio.basket.BasketProductsFragment"></fragment>
+                class="com.develmagic.quellio.basket.BasketFragment"></fragment>
 
             <Button
                 android:layout_width="wrap_content"

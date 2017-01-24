@@ -4,7 +4,6 @@
     android:id="@+id/product"
     android:layout_width="70dp"
     android:layout_height="70dp"
-    android:layout_margin="5dp"
     android:width="30dp"
     android:height="30dp"
     android:background="@drawable/product_shape"
@@ -14,6 +13,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     app:layout_collapseParallaxMultiplier="1.0">
+
 
     <ImageView
         android:layout_width="60dp"

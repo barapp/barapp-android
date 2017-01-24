@@ -2,7 +2,8 @@ package com.develmagic.quellio.list;
 
 import android.view.View;
 
-import com.develmagic.quellio.basket.BasketProductsFragment;
+import com.develmagic.quellio.basket.Basket;
+import com.develmagic.quellio.basket.BasketFragment;
 
 /**
  * Created by mejmo on 24.01. 2017.
@@ -18,9 +19,9 @@ public class AddToBasketListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        BasketProductsFragment.getInstance().getProductsList().add(this.product);
-        BasketProductsFragment.getInstance().getBasketAdapter().notifyDataSetChanged();
-//        BasketProductsFragment.getInstance().addProduct();
+        Basket.getInstance().add(this.product);
+        Basket.getInstance().getAdapter().notifyDataSetChanged();
+//        BasketFragment.getInstance().addProduct();
     }
 
 }

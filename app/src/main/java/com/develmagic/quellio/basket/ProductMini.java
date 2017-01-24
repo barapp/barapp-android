@@ -4,10 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.develmagic.quellio.R;
-import com.develmagic.quellio.list.AddToBasketListener;
 
 /**
  * Created by mejmo on 23.01. 2017.
@@ -16,8 +14,6 @@ import com.develmagic.quellio.list.AddToBasketListener;
 public class ProductMini extends LinearLayout {
 
     private int id;
-    private String name;
-    private float price;
 
     public ProductMini(Context context) {
         super(context);
@@ -37,14 +33,12 @@ public class ProductMini extends LinearLayout {
 
     public static ProductMini newInstance(LayoutInflater inflater, int id, String title, float price) {
         ProductMini product = (ProductMini) inflater.inflate(R.layout.basket_product_mini, null);
+        inflater.inflate(R.layout.basket_product_mini, null);
         product.id = id;
-        product.setOnClickListener(new RemoveFromBasketListener(product, null));
+//        product.setOnClickListener(new RemoveFromBasketListener(product, null));
 
         return product;
     }
 
-    private void click() {
-
-    }
 
 }
