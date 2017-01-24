@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.develmagic.quellio.list.Product
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/product"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="150dp"
+    android:background="@drawable/product_shape"
+    android:paddingTop="5dp"
+    android:paddingBottom="15dp"
+    android:width="100dp"
+    android:height="200dp"
+    app:layout_collapseParallaxMultiplier="1.0">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/kava2"
+        android:layout_gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/productname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Espresso"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textStyle="italic|bold"
+
+        />
+
+    <TextView
+        android:id="@+id/productprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.50 €"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+</com.develmagic.quellio.list.Product>

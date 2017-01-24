@@ -245,22 +245,26 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.develmagic.quellio.controls.IconLabelTabLayout;
+import com.develmagic.quellio.basket.BasketProductsFragment;
+import com.develmagic.quellio.tabmenu.IconLabelTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.develmagic.quellio.R;
-import com.develmagic.quellio.fragments.ProductList;
+import com.develmagic.quellio.list.ProductList;
 
 public class MainActivity extends AppCompatActivity {
 
     private IconLabelTabLayout tabLayout;
     private ViewPager viewPager;
+    private static MainActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_main);
 
         tabLayout = (IconLabelTabLayout) findViewById(R.id.tabs);
@@ -279,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_beer, 1);
         tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_softdrinks, 2);
         tabLayout.decorateTab(getApplicationContext(), R.drawable.ic_pastry, 3);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView myList = (RecyclerView) findViewById(R.id.basket_recycler_view);
+        myList.setLayoutManager(layoutManager);
 
     }
 
@@ -310,4 +318,9 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
 }

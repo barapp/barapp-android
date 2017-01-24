@@ -20,7 +20,7 @@
             android:paddingTop="@dimen/appbar_padding_top"
             android:theme="@style/AppTheme.AppBarOverlay">
 
-            <com.develmagic.quellio.controls.IconLabelTabLayout
+            <com.develmagic.quellio.tabmenu.IconLabelTabLayout
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="112dp"
@@ -36,9 +36,9 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="380dp"
             android:background="#42342b"
-            android:padding="30dp"
+            android:padding="15dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <LinearLayout
@@ -60,7 +60,7 @@
                     android:text="Order summary: "
                     android:layout_width="wrap_content"
                     android:id="@+id/summarytitle"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:textColor="#ffffff"
                     android:layout_height="30dp" />
 
@@ -83,6 +83,12 @@
                     android:id="@+id/summarycount"/>
 
             </LinearLayout>
+
+            <fragment
+                android:id="@+id/basket_products"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                class="com.develmagic.quellio.basket.BasketProductsFragment"></fragment>
 
             <Button
                 android:layout_width="wrap_content"

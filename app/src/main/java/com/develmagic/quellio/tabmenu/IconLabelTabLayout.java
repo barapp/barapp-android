@@ -1,4 +1,4 @@
-package com.develmagic.quellio.controls;
+package com.develmagic.quellio.tabmenu;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -22,13 +22,14 @@ public class IconLabelTabLayout extends TabLayout {
 
     private static final String DIVIDER_COLOR = "#42362e";
     private String dividerColor;
+    private IconLabelSelectedListenerProxy listenerProxy;
 
     public Tab decorateTab(Context context, @DrawableRes int icon, int tabIndex) {
 
         Tab tab = getTabAt(tabIndex);
-        Typeface typeface = Typeface.createFromAsset(context.getAssets(),"Roboto-Light.ttf");
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "Roboto-Light.ttf");
 
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_tab_item, null);
+        View view = LayoutInflater.from(context).inflate(R.layout.tab_custom_item, null);
         view.findViewById(R.id.icon).setBackgroundResource(icon);
 
         TextView textView = (TextView) view.findViewById(R.id.labeltext);
@@ -62,9 +63,12 @@ public class IconLabelTabLayout extends TabLayout {
         setup();
     }
 
+    /**
+     * Sets dividers between cells and highlighting of label/image when Tab is active
+     */
     public void setup() {
         setDividers();
-        this.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        this.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getCustomView() != null) {
@@ -88,8 +92,21 @@ public class IconLabelTabLayout extends TabLayout {
         });
     }
 
+    /**
+     * API23 does not support adding listeners, listenerProxy implements this
+     * @param onTabSelectedListener
+     */
+    @Override
+    public void setOnTabSelectedListener(OnTabSelectedListener onTabSelectedListener) {
+        if (listenerProxy == null)
+            listenerProxy = new IconLabelSelectedListenerProxy(onTabSelectedListener);
+        else
+            listenerProxy.addListener(onTabSelectedListener);
+        super.setOnTabSelectedListener(listenerProxy);
+    }
+
     private void setDividers() {
-        LinearLayout linearLayout = (LinearLayout)this.getChildAt(0);
+        LinearLayout linearLayout = (LinearLayout) this.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(Color.parseColor(getDividerColor()));

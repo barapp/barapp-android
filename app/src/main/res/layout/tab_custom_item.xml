@@ -20,6 +20,6 @@
         android:textColor="#FFFFFF"
         android:alpha="0.5"
         android:paddingTop="5dp"
-        android:textSize="17dp" />
+        android:textSize="14dp" />
 
 </LinearLayout>
