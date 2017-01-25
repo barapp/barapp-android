@@ -21,7 +21,6 @@ public class AddToBasketListener implements View.OnClickListener {
     public void onClick(View v) {
         Basket.getInstance().add(this.product);
         Basket.getInstance().getAdapter().notifyDataSetChanged();
-//        BasketFragment.getInstance().addProduct();
     }
 
 }

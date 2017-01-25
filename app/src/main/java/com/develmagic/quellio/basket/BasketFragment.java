@@ -31,6 +31,7 @@ public class BasketFragment extends Fragment {
         basketProducts = (RecyclerView) inflater.inflate(R.layout.basket_product_list, container, false);
         basketProducts.setAdapter(Basket.getInstance().getAdapter());
         basketProducts.setLayoutManager(layoutManager);
+        basketProducts.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.item_offset));
 
         return basketProducts;
     }

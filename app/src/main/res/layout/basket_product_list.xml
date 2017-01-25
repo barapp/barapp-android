@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/basket_recycler_view"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/basket_grid_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -11,4 +11,4 @@
     android:layout_marginBottom="20dp">
 
 
-</GridView>
+</android.support.v7.widget.RecyclerView>

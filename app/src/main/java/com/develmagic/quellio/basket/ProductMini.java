@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.develmagic.quellio.R;
+import com.develmagic.quellio.list.Product;
 
 /**
  * Created by mejmo on 23.01. 2017.
@@ -35,9 +36,11 @@ public class ProductMini extends LinearLayout {
         ProductMini product = (ProductMini) inflater.inflate(R.layout.basket_product_mini, null);
         inflater.inflate(R.layout.basket_product_mini, null);
         product.id = id;
-//        product.setOnClickListener(new RemoveFromBasketListener(product, null));
-
         return product;
+    }
+
+    public void setRemoveListener(int position) {
+
     }
 
 

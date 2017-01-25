@@ -10,18 +10,17 @@ import com.develmagic.quellio.list.Product;
 
 public class RemoveFromBasketListener implements View.OnClickListener {
 
-    private ProductMiniHolder product;
+    private ProductMini product;
     private Product productParent;
 
-    public RemoveFromBasketListener(ProductMiniHolder product, Product productParent) {
+    public RemoveFromBasketListener(ProductMini product, Product productParent) {
         this.product = product;
     }
 
     @Override
     public void onClick(View v) {
-//        BasketFragment.getInstance().getProductsList().add(this.product);
-//        BasketFragment.getInstance().getBasketAdapter().notifyDataSetChanged();
-//        BasketFragment.getInstance().addProduct();
+        Basket.getInstance().remove(this.product);
+        Basket.getInstance().getAdapter().notifyDataSetChanged();
     }
 
 }

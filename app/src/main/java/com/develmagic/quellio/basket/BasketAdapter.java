@@ -25,7 +25,8 @@ public class BasketAdapter extends RecyclerView.Adapter<ProductMiniHolder> {
 
     @Override
     public void onBindViewHolder(ProductMiniHolder holder, int position) {
-        Product product = Basket.getInstance().get(position);
+//        Product product = Basket.getInstance().get(position);
+        holder.setId(position);
         //TODO icon
     }
 
