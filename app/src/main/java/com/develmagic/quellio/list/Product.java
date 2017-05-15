@@ -3,10 +3,14 @@ package com.develmagic.quellio.list;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.develmagic.quellio.MainActivity;
 import com.develmagic.quellio.R;
+import com.develmagic.quellio.basket.Basket;
+import com.develmagic.quellio.basket.BasketFragment;
 
 /**
  * Created by mejmo on 23.01. 2017.
@@ -44,6 +48,8 @@ public class Product extends LinearLayout {
         priceText.setText(price+" EUR");
 
         product.id = id;
+        product.setPrice(price);
+        product.setName(title);
 
         product.setOnClickListener(new AddToBasketListener(product));
 
@@ -51,6 +57,48 @@ public class Product extends LinearLayout {
     }
 
     private void click() {
+
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static class AddToBasketListener implements View.OnClickListener {
+
+        private Product product;
+
+        public AddToBasketListener(Product product) {
+            this.product = product;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Basket.getInstance().add(this.product);
+            Basket.getInstance().updateUI();
+        }
 
     }
 

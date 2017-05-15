@@ -35,4 +35,6 @@ public class BasketAdapter extends RecyclerView.Adapter<ProductMiniHolder> {
         return Basket.getInstance().size();
     }
 
+
+
 }

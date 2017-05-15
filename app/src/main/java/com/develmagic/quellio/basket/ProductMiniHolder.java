@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.develmagic.quellio.R;
-import com.develmagic.quellio.list.AddToBasketListener;
 
 /**
  * Created by mejmo on 23.01. 2017.

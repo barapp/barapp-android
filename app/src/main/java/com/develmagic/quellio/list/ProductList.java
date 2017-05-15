@@ -9,9 +9,16 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.develmagic.quellio.Category;
+
 
 public class ProductList extends Fragment {
-    public static final String ARG_PAGE = "ARG_PAGE";
+
+    private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +39,9 @@ public class ProductList extends Fragment {
         lp.setMargins(20, 0, 20, 0);
         productsListView.setLayoutParams(lp);
 
-        productsListView.setAdapter(new ProductAdapter(this.getContext()));
+        productsListView.setAdapter(new ProductAdapter(this.getContext(), this.category));
         return productsListView;
 
     }
+
 }

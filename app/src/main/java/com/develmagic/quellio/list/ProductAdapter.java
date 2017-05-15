@@ -6,7 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.develmagic.quellio.R;
+import com.develmagic.quellio.Category;
+import com.develmagic.quellio.service.BackendQuery;
+import com.develmagic.quellio.service.dto.ProductDTO;
+
+import java.util.List;
 
 /**
  * Created by mejmo on 23.01. 2017.
@@ -14,13 +18,18 @@ import com.develmagic.quellio.R;
 
 public class ProductAdapter extends BaseAdapter {
     private Context mContext;
+    private Category category;
+    private List<ProductDTO> items;
 
-    public ProductAdapter(Context c) {
+
+    public ProductAdapter(Context c, Category category) {
         mContext = c;
+        this.category = category;
+        this.items = BackendQuery.getByCategory(category);
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return this.items.size();
     }
 
     public Object getItem(int position) {
@@ -31,20 +40,10 @@ public class ProductAdapter extends BaseAdapter {
         return 0;
     }
 
-
-
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        Product product = Product.newInstance(LayoutInflater.from(mContext), 10, "Test", 1.5f);
+        ProductDTO dto = items.get(position);
+        Product product = Product.newInstance(LayoutInflater.from(mContext), dto.getId(), dto.getName(), dto.getPrice());
         return  product;
-
     }
 
-    // references to our images
-    private Integer[] mThumbIds = {
-            R.drawable.ic_beer, R.drawable.ic_beer, R.drawable.ic_beer, R.drawable.ic_beer,
-            R.drawable.ic_beer, R.drawable.ic_beer, R.drawable.ic_beer, R.drawable.ic_beer,
-            R.drawable.ic_beer
-    };
 }
