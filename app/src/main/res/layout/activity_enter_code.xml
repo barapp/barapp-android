@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content_enter_code"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.develmagic.quellio.CodeActivity">
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/logo"></ImageView>-->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Enter code"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="36sp"/>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:width="300px"
+        android:padding="10px"
+        android:textCursorDrawable="@null"
+        android:ems="10"
+        android:maxLength="9"
+        android:inputType="textPassword"
+        android:textSize="50sp"
+        android:textColor="#ffffff"
+        android:layout_margin="50px"
+        android:background="@color/black_overlay"
+
+        />
+
+    <Button
+        android:id="@+id/enter_code_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editText"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="100dp"
+        android:width="300dp"
+        android:height="60dp"
+        android:background="@drawable/finish_order_button"
+        android:includeFontPadding="true"
+        android:padding="10dp"
+        android:text="OK"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_editor_absoluteY="490dp" />
+
+</android.widget.LinearLayout>

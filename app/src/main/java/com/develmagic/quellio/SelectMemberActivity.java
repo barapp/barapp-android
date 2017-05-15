@@ -42,7 +42,6 @@ public class SelectMemberActivity extends AppCompatActivity {
     ListView myListView;
     List<MemberDTO> elements;
     private SelectMemberActivity instance;
-    private int resultCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,10 +51,8 @@ public class SelectMemberActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_select_member);
 
-        // elements
         elements = BackendQuery.getMembers();
 
-        // listview
         myListView = (ListView) findViewById(R.id.myListView);
         myListView.setBackgroundColor(getColor(R.color.colorPrimary));
         myListView.setFastScrollEnabled(true);
@@ -65,7 +62,7 @@ public class SelectMemberActivity extends AppCompatActivity {
                 final MemberDTO dto = (MemberDTO) myListView.getItemAtPosition(i);
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(instance);
-                alert.setTitle("Delete");
+                alert.setTitle("Confirm order");
                 alert.setMessage("Order will be billed to "+dto.toString());
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

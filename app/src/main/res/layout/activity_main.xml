@@ -36,7 +36,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="380dp"
+            android:layout_height="480dp"
             android:background="#42342b"
             android:padding="15dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -66,7 +66,7 @@
 
 
                 <TextView
-                    android:text="2.30 EUR"
+                    android:text="0.00 EUR"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:textColor="#44d8a6"
@@ -75,7 +75,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:text=" (4)"
+                    android:text=" (0)"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:textColor="#ffffff"
@@ -89,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="13px"
                 class="com.develmagic.quellio.basket.BasketFragment"></fragment>
 
             <Button

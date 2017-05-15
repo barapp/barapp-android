@@ -33,7 +33,7 @@ public class ProductList extends Fragment {
         productsListView.setVerticalSpacing(10);
         productsListView.setHorizontalSpacing(10);
         productsListView.setHorizontalScrollBarEnabled(false);
-        productsListView.setVerticalScrollBarEnabled(false);
+        productsListView.setVerticalScrollBarEnabled(true);
 
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(20, 0, 20, 0);
