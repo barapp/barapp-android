@@ -3,13 +3,21 @@ package com.develmagic.quellio.service.dto;
 import android.support.annotation.NonNull;
 import android.text.Html;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by mejmo on 15.5.2017.
  */
 
 public class MemberDTO {
+
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("company_name")
     private String team;
+
+    @SerializedName("id")
     private long id;
 
     public String getName() {

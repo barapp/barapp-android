@@ -2,6 +2,8 @@ package com.develmagic.quellio.service;
 
 import android.text.TextUtils;
 
+import com.develmagic.quellio.Constants;
+
 import okhttp3.Credentials;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -9,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    public static final String API_BASE_URL = "http://192.168.3.101:8000";
+    public static final String API_BASE_URL = Constants.API_BASE_URL;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 

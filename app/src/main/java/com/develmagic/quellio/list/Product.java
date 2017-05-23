@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,12 +59,11 @@ public class Product extends LinearLayout {
         priceText.setText(price+" EUR");
 
         ImageView imageView = (ImageView) product.findViewById(R.id.productimage);
-        new DownloadImageTask(imageView).execute(Constants.API_BASE_URL+imageUrl.substring(1));
+        new DownloadImageTask(imageView, product).execute(Constants.API_BASE_URL+imageUrl);
 
         product.id = id;
         product.setPrice(price);
         product.setName(title);
-        product.setImage(((BitmapDrawable)imageView.getDrawable()).getBitmap());
 
         product.setOnClickListener(new AddToBasketListener(product));
 
@@ -80,9 +80,11 @@ public class Product extends LinearLayout {
 
     private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
+        Product product;
 
-        public DownloadImageTask(ImageView bmImage) {
+        public DownloadImageTask(ImageView bmImage, Product product) {
             this.bmImage = bmImage;
+            this.product = product;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -100,6 +102,7 @@ public class Product extends LinearLayout {
 
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+            product.setImage(result);
         }
     }
 
@@ -139,8 +142,17 @@ public class Product extends LinearLayout {
 
         @Override
         public void onClick(View v) {
-            Basket.getInstance().add(this.product);
-            Basket.getInstance().updateUI();
+            if (Basket.getInstance().size() <= 2) {
+                Basket.getInstance().add(this.product);
+                Basket.getInstance().updateUI();
+                MainActivity.getInstance().getFinishOrder().setClickable(true);
+            } else {
+                Snackbar snackbar = Snackbar.make(v, "Maximum 3 items in one order", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+            if (Basket.getInstance().size() == 0) {
+                MainActivity.getInstance().getFinishOrder().setClickable(false);
+            }
         }
 
     }

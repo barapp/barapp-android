@@ -9,6 +9,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -18,10 +21,11 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.develmagic.quellio.basket.Basket;
+import com.develmagic.quellio.basket.BasketAdapter;
 import com.develmagic.quellio.list.ProductList;
 import com.develmagic.quellio.service.BackendService;
 import com.develmagic.quellio.service.ServiceGenerator;
-import com.develmagic.quellio.service.dto.OrderResult;
+import com.develmagic.quellio.service.dto.OrderResultDTO;
 import com.develmagic.quellio.service.dto.ProductDTOList;
 import com.develmagic.quellio.tabmenu.IconLabelTabLayout;
 
@@ -31,7 +35,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,10 +43,12 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     public static TextView orderSummary;
     public static TextView orderCount;
+    private Button finishOrder;
     private Cache cache;
     private Network network = new BasicNetwork(new HurlStack());
     private RequestQueue mRequestQueue;
     private ProductDTOList items;
+    private GridView basketProducts;
 
     public static final int PICK_MEMBER_REQUEST = 1;
 
@@ -58,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
         setContentView(R.layout.activity_main);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.API_BASE_URL)
-                .build();
         BackendService service = ServiceGenerator.createService(BackendService.class, Constants.API_USERNAME, Constants.API_PASS);
         Call<ProductDTOList> call = service.listItems();
         call.enqueue(new Callback<ProductDTOList>() {
@@ -101,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFrag(pastryFragment, "Pastry");
 
         viewPager.setAdapter(viewPagerAdapter);
+        finishOrder = (Button) findViewById(R.id.finish_order);
 
         tabLayout.setupWithViewPager(viewPager);
 
@@ -112,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
         orderSummary = (TextView) findViewById(R.id.summaryprice);
         orderCount = (TextView) findViewById(R.id.summarycount);
 
+
+        Basket.getInstance().setAdapter(new BasketAdapter(getBaseContext()));
+        basketProducts = (GridView) findViewById(R.id.basket_grid_view);
+        basketProducts.setNumColumns(3);
+        basketProducts.setHorizontalSpacing(10);
+        basketProducts.setAdapter(Basket.getInstance().getAdapter());
+        basketProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Basket.getInstance().remove(position);
+                Basket.getInstance().updateUI();
+            }
+        });
     }
 
     public void clickFinishOrder(View view) {
@@ -127,17 +143,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_MEMBER_REQUEST) {
-            if (resultCode == OrderResult.OK) {
-                Snackbar snackbar = Snackbar.make(this.viewPager, "Order sucessfully processed", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                Basket.getInstance().clear();
-                Basket.getInstance().updateUI();
-            }
+//            if (resultCode == OrderResultDTO.OK) {
+//                Snackbar snackbar = Snackbar.make(this.viewPager, "Order sucessfully processed", Snackbar.LENGTH_LONG);
+//                snackbar.show();
+//                Basket.getInstance().clear();
+//                Basket.getInstance().updateUI();
+//            }
         }
     }
 
     public static MainActivity getInstance() {
         return instance;
+    }
+
+    public Button getFinishOrder() {
+        return finishOrder;
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

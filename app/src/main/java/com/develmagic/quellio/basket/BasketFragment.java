@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,29 +25,11 @@ import java.util.List;
 
 public class BasketFragment extends Fragment {
 
-    private RecyclerView basketProducts;
+    private GridView basketProducts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        Basket.getInstance().setAdapter(new BasketAdapter(getContext()));
-        basketProducts = (RecyclerView) inflater.inflate(R.layout.basket_product_list, container, false);
-        basketProducts.setAdapter(Basket.getInstance().getAdapter());
-        basketProducts.setLayoutManager(layoutManager);
-        basketProducts.addItemDecoration(new ItemOffsetDecoration(getContext(), R.dimen.item_offset));
-        basketProducts.addOnItemTouchListener(new RecyclerTouchListener(getContext(), basketProducts, new MainActivity.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Basket.getInstance().remove(position);
-                Basket.getInstance().updateUI();
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
         return basketProducts;
     }
 

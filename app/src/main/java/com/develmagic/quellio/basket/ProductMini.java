@@ -35,14 +35,13 @@ public class ProductMini extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public static ProductMini newInstance(LayoutInflater inflater, int id, String title, float price) {
+    public static ProductMini newInstance(LayoutInflater inflater, int id, Bitmap image) {
         ProductMini product = (ProductMini) inflater.inflate(R.layout.basket_product_mini, null);
         inflater.inflate(R.layout.basket_product_mini, null);
         product.id = id;
 
-//        ImageView imageView = (ImageView) product.findViewById(R.id.productminiimage);
-//        imageView.setImageBitmap(bitmap);
-//        new Product.DownloadImageTask(imageView).execute(Constants.API_BASE_URL+imageUrl.substring(1));
+        ImageView imageView = (ImageView) product.findViewById(R.id.productminiimage);
+        imageView.setImageBitmap(image);
 
         return product;
     }

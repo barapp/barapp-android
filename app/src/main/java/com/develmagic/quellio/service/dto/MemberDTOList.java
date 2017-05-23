@@ -10,6 +10,7 @@ import java.util.List;
  * Created by mejmo on 23.5.2017.
  */
 
-public class ProductDTOList extends AbstractDTOList<ProductDTO> {
+public class MemberDTOList extends AbstractDTOList<MemberDTO> {
+
 
 }

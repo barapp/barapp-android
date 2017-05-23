@@ -84,13 +84,16 @@
 
             </LinearLayout>
 
-            <fragment
-                android:id="@+id/basket_products"
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/basket_grid_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:dividerPadding="5dp"
+                android:gravity="center"
                 android:layout_gravity="center"
-                android:layout_marginBottom="13px"
-                class="com.develmagic.quellio.basket.BasketFragment"></fragment>
+                android:layout_marginBottom="20dp">
+            </GridView>
 
             <Button
                 android:id="@+id/finish_order"

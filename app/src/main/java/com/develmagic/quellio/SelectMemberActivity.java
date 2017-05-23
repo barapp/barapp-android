@@ -1,11 +1,9 @@
 package com.develmagic.quellio;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,20 +16,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SectionIndexer;
-import android.widget.TextView;
 
 import com.develmagic.quellio.basket.Basket;
 import com.develmagic.quellio.service.BackendQuery;
+import com.develmagic.quellio.service.BackendService;
+import com.develmagic.quellio.service.ServiceGenerator;
 import com.develmagic.quellio.service.dto.MemberDTO;
-import com.develmagic.quellio.service.dto.OrderResult;
+import com.develmagic.quellio.service.dto.MemberDTOList;
+import com.develmagic.quellio.service.dto.OrderResultDTO;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by mejmo on 15.5.2017.
@@ -40,19 +43,35 @@ import java.util.Set;
 public class SelectMemberActivity extends AppCompatActivity {
 
     ListView myListView;
-    List<MemberDTO> elements;
     private SelectMemberActivity instance;
+    private List<MemberDTO> items;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         instance = this;
 
         setContentView(R.layout.activity_select_member);
 
-        elements = BackendQuery.getMembers();
+        BackendService service = ServiceGenerator.createService(BackendService.class, Constants.API_USERNAME, Constants.API_PASS);
+        Call<MemberDTOList> call = service.listMembers();
+        call.enqueue(new Callback<MemberDTOList>() {
+            @Override
+            public void onResponse(Call<MemberDTOList> call, Response<MemberDTOList> response) {
+                instance.setItems(response.body().getProducts());
+                initializeComponents();
+            }
 
+            @Override
+            public void onFailure(Call<MemberDTOList> call, Throwable t) {
+                Log.e("barapp", "Cannot get members list", t);
+            }
+        });
+
+    }
+
+    public void initializeComponents() {
         myListView = (ListView) findViewById(R.id.myListView);
         myListView.setBackgroundColor(getColor(R.color.colorPrimary));
         myListView.setFastScrollEnabled(true);
@@ -63,22 +82,36 @@ public class SelectMemberActivity extends AppCompatActivity {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(instance);
                 alert.setTitle("Confirm order");
-                alert.setMessage("Order will be billed to "+dto.toString());
+                alert.setMessage("Order will be billed to " + dto.toString());
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        OrderResult result = BackendQuery.order(dto.getId(), Basket.getInstance());
-                        if (result.getResultCode() == OrderResult.ERROR) {
-                            Snackbar snackbar = Snackbar.make(view, "Cannot make order: "+result.getError(), Snackbar.LENGTH_LONG);
-                            snackbar.show();
-                            return;
-                        } else {
-                            dialog.dismiss();
-                            instance.setResult(OrderResult.ERROR);
-                            Intent returnIntent = new Intent();
-                            setResult(OrderResult.OK, returnIntent);
-                            finish();
-                        }
+                    public void onClick(final DialogInterface dialog, int which) {
+                        BackendService service = ServiceGenerator.createService(BackendService.class, Constants.API_USERNAME, Constants.API_PASS);
+                        Call<OrderResultDTO> call = service.order(dto.getId(), Basket.getInstance());
+                        call.enqueue(new Callback<OrderResultDTO>() {
+                            @Override
+                            public void onResponse(Call<OrderResultDTO> call, Response<OrderResultDTO> response) {
+                                OrderResultDTO result = response.body();
+//                                if (result.getResultCode() == OrderResultDTO.ERROR) {
+//                                    Snackbar snackbar = Snackbar.make(view, "Cannot make order: " + result.getError(), Snackbar.LENGTH_LONG);
+//                                    snackbar.show();
+//                                    return;
+//                                } else {
+//                                    dialog.dismiss();
+//                                    instance.setResult(OrderResultDTO.ERROR);
+//                                    Intent returnIntent = new Intent();
+//                                    setResult(OrderResultDTO.OK, returnIntent);
+//                                    finish();
+//                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<OrderResultDTO> call, Throwable t) {
+                                Log.e("barapp", "Cannot get members list", t);
+                                Snackbar snackbar = Snackbar.make(view, "Cannot make order", Snackbar.LENGTH_LONG);
+                                snackbar.show();
+                            }
+                        });
                     }
                 });
                 alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -90,31 +123,38 @@ public class SelectMemberActivity extends AppCompatActivity {
                 alert.show();
             }
         });
-        MyAZAdapter adapter = new MyAZAdapter(
+        MemberListAdapter adapter = new MemberListAdapter(
                 getApplicationContext(), android.R.layout.simple_list_item_1,
-                elements);
+                items);
         myListView.setAdapter(adapter);
 
     }
 
-    class MyAZAdapter extends ArrayAdapter<MemberDTO> implements SectionIndexer {
+    public List<MemberDTO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<MemberDTO> items) {
+        this.items = items;
+    }
+
+    class MemberListAdapter extends ArrayAdapter<MemberDTO> implements SectionIndexer {
         ArrayList<MemberDTO> myElements;
         HashMap<String, Integer> azIndexer;
         String[] sections;
 
-        public MyAZAdapter(Context context, int textViewResourceId, @NonNull  List<MemberDTO> objects) {
+        public MemberListAdapter(Context context, int textViewResourceId, @NonNull List<MemberDTO> objects) {
             super(context, textViewResourceId, objects);
             myElements = (ArrayList<MemberDTO>) objects;
-            azIndexer = new HashMap<>(); //stores the positions for the start of each letter
+            azIndexer = new HashMap<>();
 
-            int size = elements.size();
+            int size = items.size();
             for (int i = size - 1; i >= 0; i--) {
-                String element = elements.get(i).getName();
-                //We store the first letter of the word, and its index.
+                String element = items.get(i).getName();
                 azIndexer.put(element.substring(0, 1), i);
             }
 
-            Set<String> keys = azIndexer.keySet(); // set of letters
+            Set<String> keys = azIndexer.keySet();
 
             Iterator<String> it = keys.iterator();
             ArrayList<String> keyList = new ArrayList<String>();
@@ -123,8 +163,8 @@ public class SelectMemberActivity extends AppCompatActivity {
                 String key = it.next();
                 keyList.add(key);
             }
-            Collections.sort(keyList);//sort the keylist
-            sections = new String[keyList.size()]; // simple conversion to array
+            Collections.sort(keyList);
+            sections = new String[keyList.size()];
             keyList.toArray(sections);
         }
 
