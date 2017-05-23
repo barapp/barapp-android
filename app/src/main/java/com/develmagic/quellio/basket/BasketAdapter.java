@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.develmagic.quellio.MainActivity;
 import com.develmagic.quellio.list.Product;
 
 /**
@@ -20,6 +21,9 @@ public class BasketAdapter extends RecyclerView.Adapter<ProductMiniHolder> {
 
     @Override
     public ProductMiniHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        for (Product p : Basket.getInstance()) {
+
+        }
         return new ProductMiniHolder(ProductMini.newInstance(LayoutInflater.from(mContext), 10, "Test", 1.5f));
     }
 
@@ -27,6 +31,7 @@ public class BasketAdapter extends RecyclerView.Adapter<ProductMiniHolder> {
     public void onBindViewHolder(ProductMiniHolder holder, int position) {
 //        Product product = Basket.getInstance().get(position);
         holder.setId(position);
+        this.
         //TODO icon
     }
 

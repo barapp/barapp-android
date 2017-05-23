@@ -11,13 +11,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.develmagic.quellio.basket.Basket;
 import com.develmagic.quellio.list.ProductList;
+import com.develmagic.quellio.service.BackendService;
+import com.develmagic.quellio.service.ServiceGenerator;
 import com.develmagic.quellio.service.dto.OrderResult;
+import com.develmagic.quellio.service.dto.ProductDTOList;
 import com.develmagic.quellio.tabmenu.IconLabelTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +40,45 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     public static TextView orderSummary;
     public static TextView orderCount;
+    private Cache cache;
+    private Network network = new BasicNetwork(new HurlStack());
+    private RequestQueue mRequestQueue;
+    private ProductDTOList items;
 
     public static final int PICK_MEMBER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        cache = new DiskBasedCache(getCacheDir(), 10 * 1024 * 1024); // 1MB cap
+        mRequestQueue = new RequestQueue(cache, network);
+        mRequestQueue.start();
+
         instance = this;
         setContentView(R.layout.activity_main);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.API_BASE_URL)
+                .build();
+        BackendService service = ServiceGenerator.createService(BackendService.class, Constants.API_USERNAME, Constants.API_PASS);
+        Call<ProductDTOList> call = service.listItems();
+        call.enqueue(new Callback<ProductDTOList>() {
+            @Override
+            public void onResponse(Call<ProductDTOList> call, Response<ProductDTOList> response) {
+                getInstance().setItems(response.body());
+                initializeComponents();
+            }
+
+            @Override
+            public void onFailure(Call<ProductDTOList> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void initializeComponents() {
         tabLayout = (IconLabelTabLayout) findViewById(R.id.tabs);
 
         viewPager = (ViewPager) findViewById(R.id.container);
@@ -92,6 +136,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static MainActivity getInstance() {
+        return instance;
+    }
+
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -121,8 +169,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static MainActivity getInstance() {
-        return instance;
+    public ProductDTOList getItems() {
+        return items;
+    }
+
+    public void setItems(ProductDTOList items) {
+        this.items = items;
     }
 
     public interface ClickListener {
@@ -130,6 +182,5 @@ public class MainActivity extends AppCompatActivity {
 
         void onLongClick(View view, int position);
     }
-
 
 }

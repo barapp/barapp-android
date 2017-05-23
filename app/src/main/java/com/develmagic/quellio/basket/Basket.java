@@ -4,6 +4,7 @@ import android.widget.TextView;
 
 import com.develmagic.quellio.MainActivity;
 import com.develmagic.quellio.list.Product;
+import com.develmagic.quellio.util.Util;
 
 import java.util.ArrayList;
 
@@ -26,8 +27,10 @@ public class Basket extends ArrayList<Product> {
         for (Product p : this) {
             f += p.getPrice();
         }
-        return f;
+        return Util.round(f, 2);
     }
+
+
 
     public BasketAdapter getAdapter() {
         return adapter;

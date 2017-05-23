@@ -38,7 +38,6 @@ public class ProductList extends Fragment {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(20, 0, 20, 0);
         productsListView.setLayoutParams(lp);
-
         productsListView.setAdapter(new ProductAdapter(this.getContext(), this.category));
         return productsListView;
 

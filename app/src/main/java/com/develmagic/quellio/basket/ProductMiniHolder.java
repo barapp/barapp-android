@@ -25,7 +25,7 @@ public class ProductMiniHolder extends RecyclerView.ViewHolder {
     }
 
 //    public static ProductMiniHolder newInstance(LayoutInflater inflater, int id, String title, float price) {
-//        ProductMiniHolder product = P(roductMiniHolder) inflater.inflate(R.layout.basket_product_mini, null);
+//        ProductMiniHolder product = (ProductMiniHolder) inflater.inflate(R.layout.basket_product_mini, null);
 //        product.id = id;
 //        product.setOnClickListener(new RemoveFromBasketListener(product, null));
 //

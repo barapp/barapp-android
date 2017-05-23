@@ -1,10 +1,13 @@
 package com.develmagic.quellio.basket;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.develmagic.quellio.Constants;
 import com.develmagic.quellio.R;
 import com.develmagic.quellio.list.Product;
 
@@ -36,6 +39,11 @@ public class ProductMini extends LinearLayout {
         ProductMini product = (ProductMini) inflater.inflate(R.layout.basket_product_mini, null);
         inflater.inflate(R.layout.basket_product_mini, null);
         product.id = id;
+
+//        ImageView imageView = (ImageView) product.findViewById(R.id.productminiimage);
+//        imageView.setImageBitmap(bitmap);
+//        new Product.DownloadImageTask(imageView).execute(Constants.API_BASE_URL+imageUrl.substring(1));
+
         return product;
     }
 
