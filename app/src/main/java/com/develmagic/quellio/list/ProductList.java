@@ -1,7 +1,6 @@
 package com.develmagic.quellio.list;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +25,6 @@ public class ProductList extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        ConstraintLayout viewPagerContainer = new ConstraintLayout(getContext());
 
         GridView productsListView = new GridView(getContext());
         productsListView.setNumColumns(3);

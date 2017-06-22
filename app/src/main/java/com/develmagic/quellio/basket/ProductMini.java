@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.develmagic.quellio.Constants;
 import com.develmagic.quellio.R;
@@ -39,6 +40,9 @@ public class ProductMini extends LinearLayout {
         ProductMini product = (ProductMini) inflater.inflate(R.layout.basket_product_mini, null);
         inflater.inflate(R.layout.basket_product_mini, null);
         product.id = id;
+
+        TextView count = (TextView) product.findViewById(R.id.count);
+        count.setText("2");
 
         ImageView imageView = (ImageView) product.findViewById(R.id.productminiimage);
         imageView.setImageBitmap(image);

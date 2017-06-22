@@ -2,9 +2,19 @@ package com.develmagic.quellio.util;
 
 import android.graphics.drawable.Drawable;
 
+import com.develmagic.quellio.service.dto.ProductDTO;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.List;
 
 /**
  * Created by mejmo on 12.5.2017.
@@ -27,5 +37,28 @@ public class Util {
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
     }
+
+    public static JsonObject generateTransaction(long userId, List<ProductDTO> productDTOList) {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            JSONArray productsArray = new JSONArray();
+
+            for (ProductDTO dto : productDTOList) {
+                JSONObject j = new JSONObject();
+                j.put("id", dto.getId());
+                productsArray.put(j);
+            }
+
+            jsonObject.put("products", productsArray);
+            jsonObject.put("userId", userId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonParser jsonParser = new JsonParser();
+        JsonObject gsonObject = (JsonObject) jsonParser.parse(jsonObject.toString());
+        return gsonObject;
+    }
+
 
 }

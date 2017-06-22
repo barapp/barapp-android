@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private IconLabelTabLayout tabLayout;
     private ViewPager viewPager;
@@ -74,7 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ProductDTOList> call, Throwable t) {
-
+                Log.e("barapp", "Cannot retrieve items");
+                Snackbar snackbar = Snackbar.make(findViewById(R.id.container), "Cannot retrieve items", Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         });
 
@@ -115,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         orderSummary = (TextView) findViewById(R.id.summaryprice);
         orderCount = (TextView) findViewById(R.id.summarycount);
 
-
         Basket.getInstance().setAdapter(new BasketAdapter(getBaseContext()));
         basketProducts = (GridView) findViewById(R.id.basket_grid_view);
         basketProducts.setNumColumns(3);
@@ -124,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
         basketProducts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Basket.getInstance().remove(position);
+                if (Basket.getInstance().get(position).getQuantity() == 1) {
+                    Basket.getInstance().remove(position);
+                } else {
+                    Basket.getInstance().get(position).decrement();
+                }
                 Basket.getInstance().updateUI();
             }
         });
@@ -143,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PICK_MEMBER_REQUEST) {
-//            if (resultCode == OrderResultDTO.OK) {
-//                Snackbar snackbar = Snackbar.make(this.viewPager, "Order sucessfully processed", Snackbar.LENGTH_LONG);
-//                snackbar.show();
-//                Basket.getInstance().clear();
-//                Basket.getInstance().updateUI();
-//            }
+            if (resultCode == OrderResultDTO.OK) {
+                Snackbar snackbar = Snackbar.make(this.viewPager, "Order sucessfully processed", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                Basket.getInstance().clear();
+                Basket.getInstance().updateUI();
+            }
         }
     }
 

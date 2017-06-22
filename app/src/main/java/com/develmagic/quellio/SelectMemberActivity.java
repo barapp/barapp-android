@@ -18,12 +18,15 @@ import android.widget.ListView;
 import android.widget.SectionIndexer;
 
 import com.develmagic.quellio.basket.Basket;
-import com.develmagic.quellio.service.BackendQuery;
+import com.develmagic.quellio.basket.ProductQuantity;
+import com.develmagic.quellio.list.Product;
 import com.develmagic.quellio.service.BackendService;
 import com.develmagic.quellio.service.ServiceGenerator;
 import com.develmagic.quellio.service.dto.MemberDTO;
 import com.develmagic.quellio.service.dto.MemberDTOList;
 import com.develmagic.quellio.service.dto.OrderResultDTO;
+import com.develmagic.quellio.service.dto.ProductDTO;
+import com.develmagic.quellio.util.Util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,22 +90,32 @@ public class SelectMemberActivity extends AppCompatActivity {
                     @Override
                     public void onClick(final DialogInterface dialog, int which) {
                         BackendService service = ServiceGenerator.createService(BackendService.class, Constants.API_USERNAME, Constants.API_PASS);
-                        Call<OrderResultDTO> call = service.order(dto.getId(), Basket.getInstance());
+
+                        List<ProductDTO> dtos = new ArrayList<>();
+                        for (ProductQuantity pq : Basket.getInstance()) {
+                            for (int i = 0; i < pq.getQuantity(); i++) {
+                                ProductDTO dto = new ProductDTO();
+                                dto.setId(pq.getProductId());
+                                dtos.add(dto);
+                            }
+                        }
+
+                        Call<OrderResultDTO> call = service.order(Util.generateTransaction(dto.getId(), dtos));
                         call.enqueue(new Callback<OrderResultDTO>() {
                             @Override
                             public void onResponse(Call<OrderResultDTO> call, Response<OrderResultDTO> response) {
                                 OrderResultDTO result = response.body();
-//                                if (result.getResultCode() == OrderResultDTO.ERROR) {
-//                                    Snackbar snackbar = Snackbar.make(view, "Cannot make order: " + result.getError(), Snackbar.LENGTH_LONG);
-//                                    snackbar.show();
-//                                    return;
-//                                } else {
-//                                    dialog.dismiss();
-//                                    instance.setResult(OrderResultDTO.ERROR);
-//                                    Intent returnIntent = new Intent();
-//                                    setResult(OrderResultDTO.OK, returnIntent);
-//                                    finish();
-//                                }
+                                if (result.getResultCode() == OrderResultDTO.ERROR) {
+                                    Snackbar snackbar = Snackbar.make(view, "Cannot make order: " + result.getError(), Snackbar.LENGTH_LONG);
+                                    snackbar.show();
+                                    return;
+                                } else {
+                                    dialog.dismiss();
+                                    instance.setResult(OrderResultDTO.ERROR);
+                                    Intent returnIntent = new Intent();
+                                    setResult(OrderResultDTO.OK, returnIntent);
+                                    finish();
+                                }
                             }
 
                             @Override

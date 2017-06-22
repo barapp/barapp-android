@@ -19,8 +19,10 @@ import com.develmagic.quellio.MainActivity;
 import com.develmagic.quellio.R;
 import com.develmagic.quellio.basket.Basket;
 import com.develmagic.quellio.basket.BasketFragment;
+import com.develmagic.quellio.basket.ProductQuantity;
 
 import java.io.InputStream;
+import java.util.Set;
 
 /**
  * Created by mejmo on 23.01. 2017.
@@ -56,10 +58,10 @@ public class Product extends LinearLayout {
         name.setText(title);
 
         TextView priceText = (TextView) product.findViewById(R.id.productprice);
-        priceText.setText(price+" EUR");
+        priceText.setText(price + " EUR");
 
         ImageView imageView = (ImageView) product.findViewById(R.id.productimage);
-        new DownloadImageTask(imageView, product).execute(Constants.API_BASE_URL+imageUrl);
+        new DownloadImageTask(imageView, product).execute(Constants.API_BASE_URL + imageUrl);
 
         product.id = id;
         product.setPrice(price);
@@ -142,14 +144,22 @@ public class Product extends LinearLayout {
 
         @Override
         public void onClick(View v) {
-            if (Basket.getInstance().size() <= 2) {
-                Basket.getInstance().add(this.product);
-                Basket.getInstance().updateUI();
-                MainActivity.getInstance().getFinishOrder().setClickable(true);
-            } else {
-                Snackbar snackbar = Snackbar.make(v, "Maximum 3 items in one order", Snackbar.LENGTH_LONG);
+
+            if (Basket.getInstance().size() == 3 && Basket.getInstance().getProductQuantityById(product.getId()) == null) {
+                Snackbar snackbar = Snackbar.make(v, "Maximum 3 item types in one order", Snackbar.LENGTH_LONG);
                 snackbar.show();
+                return;
             }
+
+            if (Basket.getInstance().getProductQuantityById(this.product.getId()) == null) {
+                ProductQuantity productQuantity = new ProductQuantity(this.product);
+                Basket.getInstance().add(productQuantity);
+            } else {
+                Basket.getInstance().getProductQuantityById(this.product.getId()).increment();
+            }
+            Basket.getInstance().updateUI();
+            MainActivity.getInstance().getFinishOrder().setClickable(true);
+
             if (Basket.getInstance().size() == 0) {
                 MainActivity.getInstance().getFinishOrder().setClickable(false);
             }
