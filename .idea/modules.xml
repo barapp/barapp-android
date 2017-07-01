@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Doorbell.iml" filepath="$PROJECT_DIR$/Doorbell.iml" />
+      <module fileurl="file://$PROJECT_DIR$/barapp/barapp.iml" filepath="$PROJECT_DIR$/barapp/barapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/campusdatasource/campusdatasource.iml" filepath="$PROJECT_DIR$/campusdatasource/campusdatasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/doorbell/doorbell.iml" filepath="$PROJECT_DIR$/doorbell/doorbell.iml" />
+    </modules>
+  </component>
+</project>

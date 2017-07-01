@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">0100 Bar App</string>
+    <string name="name_search_hint">Search name</string>
+</resources>

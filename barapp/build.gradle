@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        defaultConfig {
+            keyAlias 'barapp'
+            keyPassword '0100Campus'
+            storePassword '0100Campus'
+            storeFile file('../../keys/campus-key.jks')
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+    defaultConfig {
+        applicationId "com.develmagic.quellio"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.defaultConfig
+        }
+    }
+}
+
+def SupportVersion = '25.3.1'
+
+dependencies {
+    compile project(':campusdatasource')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$SupportVersion"
+    compile "com.android.support:support-v4:$SupportVersion"
+    compile "com.android.support:design:$SupportVersion"
+    compile 'com.android.volley:volley:1.0.0'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile('com.google.firebase:firebase-crash:10.0.1', {
+        exclude group: 'com.android.support'
+    })
+    compile 'org.projectlombok:lombok:1.16.16'
+    testCompile 'junit:junit:4.12'
+}
