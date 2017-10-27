@@ -1,16 +1,37 @@
 apply plugin: 'java'
 
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-credentials-plugin:1.0.1'
+        classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8'
+    }
+}
+
+project.group 'rii.solutions.campus.data'
+
+apply plugin: 'nu.studer.credentials'
+apply plugin: 'de.fuerstenau.buildconfig'
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'org.projectlombok:lombok:1.16.16'
+    compileOnly "org.projectlombok:lombok:1.16.18"
+}
+
+buildConfig {
+    packageName = 'rii.solutions.campus.data'
+
+    buildConfigField 'String', 'API_USERNAME', credentials.API_USERNAME
+    buildConfigField 'String', 'API_PASS', credentials.API_PASS
+    buildConfigField 'String', 'API_BASE_URL', credentials.API_BASE_URL
 }
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
-
-def final String API_USERNAME = "barapp";
-def final String API_PASS = "k238sdfaaslsad";
-def final String API_BASE_URL = "http://develmagic.com:8000";

@@ -6,14 +6,14 @@ android {
             keyAlias 'barapp'
             keyPassword '0100Campus'
             storePassword '0100Campus'
-            storeFile file('../../keys/campus-key.jks')
+            storeFile file('../../keys-and-apks/campus/campus-key.jks')
         }
     }
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.develmagic.quellio"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,7 @@ android {
     }
 }
 
-def SupportVersion = '25.3.1'
+def SupportVersion = '25.4.0'
 
 dependencies {
     compile project(':campusdatasource')
@@ -45,6 +45,7 @@ dependencies {
     compile('com.google.firebase:firebase-crash:10.0.1', {
         exclude group: 'com.android.support'
     })
-    compile 'org.projectlombok:lombok:1.16.16'
+    compileOnly "org.projectlombok:lombok:1.16.18"
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
     testCompile 'junit:junit:4.12'
 }

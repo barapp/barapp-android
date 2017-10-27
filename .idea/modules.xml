@@ -4,7 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Doorbell.iml" filepath="$PROJECT_DIR$/Doorbell.iml" />
       <module fileurl="file://$PROJECT_DIR$/barapp/barapp.iml" filepath="$PROJECT_DIR$/barapp/barapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/barapp/barapp.iml" filepath="$PROJECT_DIR$/barapp/barapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/campus-apps.iml" filepath="$PROJECT_DIR$/.idea/campus-apps.iml" />
       <module fileurl="file://$PROJECT_DIR$/campusdatasource/campusdatasource.iml" filepath="$PROJECT_DIR$/campusdatasource/campusdatasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/campusdatasource/campusdatasource.iml" filepath="$PROJECT_DIR$/campusdatasource/campusdatasource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/doorbell/doorbell.iml" filepath="$PROJECT_DIR$/doorbell/doorbell.iml" />
       <module fileurl="file://$PROJECT_DIR$/doorbell/doorbell.iml" filepath="$PROJECT_DIR$/doorbell/doorbell.iml" />
     </modules>
   </component>
