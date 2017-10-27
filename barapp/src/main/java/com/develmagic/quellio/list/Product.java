@@ -142,12 +142,6 @@ public class Product extends LinearLayout {
         @Override
         public void onClick(View v) {
 
-            if (Basket.getInstance().size() == 3 && Basket.getInstance().getProductQuantityById(product.getId()) == null) {
-                Snackbar snackbar = Snackbar.make(v, "Maximum 3 item types in one order", Snackbar.LENGTH_LONG);
-                snackbar.show();
-                return;
-            }
-
             if (Basket.getInstance().getProductQuantityById(this.product.getId()) == null) {
                 ProductQuantity productQuantity = new ProductQuantity(this.product);
                 Basket.getInstance().add(productQuantity);

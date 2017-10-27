@@ -35,22 +35,6 @@ class ProductAdapter extends BaseAdapter {
                 this.items.add(dto);
             }
         }
-//        this.items = BackendQuery.getByCategory(category);
-//        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-//                (Request.Method.GET, "http://localhost:8000/items/", null, new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        new Gson().fromJson(response.toString(), ProductDTOList.class);
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        // TODO Auto-generated method stub
-//                        System.err.println("KOKOT");
-//                    }
-//                });
-//        MainActivity.getInstance().getmRequestQueue().add(jsObjRequest);
-
 
     }
 
